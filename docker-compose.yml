@@ -1,0 +1,10 @@
+services:
+  app:
+    image: diiexe/dockercompose:latest
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./target:/app/target
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
