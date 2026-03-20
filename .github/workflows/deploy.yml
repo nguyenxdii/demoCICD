@@ -11,18 +11,29 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v4
+
+      # -- BƯỚC MỚI THÊM VÀO ĐÂY --
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21' # Sửa lại số 21 nếu dự án của bạn dùng Java 17 hoặc bản khác
+          distribution: 'temurin'
+          cache: maven
+          
+      - name: Build with Maven
+        run: mvn clean package -DskipTests
+      # ----------------------------
 
       - name: Login to Docker Hub
-        uses: docker/login-action@v4.0.0
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v7.0.0
+        uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          # Đẩy image lên repository có tên là demo-cicd trong tài khoản diiexe
-          tags: diiexe/demo-cicd:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/demo-cicd:latest
