@@ -37,3 +37,7 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/demo-cicd:latest
+
+      - name: Trigger Deployment Webhook
+        run: |
+          curl -X GET "${{ secrets.DEPLOY_URL }}"

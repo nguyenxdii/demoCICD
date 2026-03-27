@@ -1,6 +1,6 @@
 services:
   app:
-    image: diiexe/dockercompose:latest
+    image: diiexe/demo-cicd:latest
     build: .
     ports:
       - "8080:8080"
